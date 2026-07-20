@@ -1,0 +1,23 @@
+It's an apocalyptic world where you can't climb an inch on Maslow's Hierarchy of Needs. You're starving, penniless, and constantly being chased by bandits. In a world like that the solution is clear... more vanity.
+
+Have you ever been crawling your way from Bast to Stoat, because a pack of Skimmers didn't like the way you interrupted their patrol? And while dragging the ravaged tendrils of your once beautiful legs, hoping against hope that the bartender in Stoat will have a [b]First Aid Kit[/b] for sale, you think to yourself [i]I hate my cheekbones[/i]? Then Kenshi-Compact is for you.
+
+I love [b]Kenshi[/b], but as much as I enjoy playing the game, I love adjusting my character's look... constantly. So I created this mod in order to access the Character Editor anytime. Thought I'd share it in case anyone else is obsessed with sliders.
+
+[b]Main Features[/b]
+This mod is very simple. It opens the Character Editor anytime during gameplay, with the exception of during active combat. There are no gameplay enhancements or modifications, you just get to play the 'one more change' game with any of your active characters.
+
+[b]Usage[/b]
+It's currently set to listen for the [b]ALT+V[/b] key.
+
+[b]Future Plans[/b]
+I hope to configure the [b]key binding[/b] to be a player decision.
+
+[b]Requirements[/b]
+[url=https://www.nexusmods.com/kenshi/mods/847]RE_Kenshi[/url]
+
+[b]Shout outs[/b]
+[url=https://lofigames.com/]Lo-Fi games[/url]
+
+[b]Source Code[/b]
+[url=https://github.com/farghul/kenshi/]Kenshi-Compact[/url]

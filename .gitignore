@@ -1,0 +1,67 @@
+# ─────────────────────────────
+# Build artifacts
+# ─────────────────────────────
+build/
+bin/
+dist/
+*/CMakeFiles/
+*/CMakeCache.txt
+cmake_install.cmake
+Makefile
+
+# Ninja build files
+.ninja_deps
+.ninja_log
+
+# ─────────────────────────────
+# Visual Studio / MSVC
+# ─────────────────────────────
+*.sln
+*.vcxproj
+*.vcxproj.filters
+*.user
+*.opensdf
+*.sdf
+*.pdb
+*.idb
+*.ipch
+*.db
+*.opendb
+.vs/
+
+# VS Code
+.vscode/
+
+# ─────────────────────────────
+# Compiled binaries
+# ─────────────────────────────
+*.dll
+*.exe
+*.lib
+*.exp
+*.obj
+*.o
+*.so
+
+# ─────────────────────────────
+# Logs and temporary files
+# ─────────────────────────────
+*.log
+*.tmp
+*.cache
+
+# ─────────────────────────────
+# OS-specific junk
+# ─────────────────────────────
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
+
+# ─────────────────────────────
+# Python virtual environments
+# ─────────────────────────────
+venv/
+.env/
