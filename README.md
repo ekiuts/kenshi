@@ -1,13 +1,50 @@
-# Kenshi Compact
+# Kenshi Mods
 
-![Banner](misc/banner.png)
+Repository storage for any and all Kenshi related mods.
 
-It's an apocalyptic world where you can't climb an inch on Maslow's Heirchy of Needs. You're starving, penniless, and constantly being chased by bandits. In a world like that the solution is clear... more vanity.
+## 📂 Project Structure
 
-Have you ever been crawling your way from Bast to Stoat, because a pack of Skimmers didn't like the way you interupted their patrol? And while dragging the ravaged tendrils of your once beautiful legs, hoping against hope that the bartender in Stoat will have a `First Aid Kit` for sale, you think to yourself *I hate my cheekbones*? Then Kenshi-Compact is for you.
+Inside of the Kenshi project are the following folders and files:
 
-I love Kenshi, but as much as I enjoy playing the game, I love adjusting my character's look... constantly. So I created this mod in order to access the Character Editor anytime. Thought I'd share it in case anyone else is obsessed with sliders.
-
-This mod is very simple. It opens the Character Editor anytime during gameplay, with the exception of during active combat. There are no gameplay enhancements or modifications, you just get to play the `one more change` game with any of your active characters.
-
-![Reflection](misc/reflection.png)
+```zsh
+.
+├── Kenshi-Compact/
+│   ├── images/
+│       ├── banner.png
+│       ├── logo.png
+│       ├── reflection.png
+│   ├── src/
+│       ├── Kenshi-Compact.cpp
+│   ├── CMakeLists.txt
+│   ├── CMakePresets.json
+│   ├── Kenshi-Compact.dll
+│   ├── Kenshi-Compact.mod
+│   ├── RE_Kenshi.json
+│   ├── README.md
+├── KenshiCompact/
+│   ├── scripts/
+│       ├── init/
+│           ├── editor.lua
+│   │   ├── KenshiCompact.mod
+│   │   ├── OIS_KEY_CODES.md
+│   │   ├── README.md
+├── KenshiMedic/
+│   ├── scripts/
+│        ├── init/
+│            ├── medic.lua
+│   ├── banner.png
+│   ├── KenshiMedic.mod
+│   ├── OIS_KEY_CODES.md
+│   ├── README.md
+├── text/
+│   ├── kc_desc_nexus.txt
+│   ├── kc_desc_steam.txt
+│   ├── kcl_desc_nexus.txt
+│   ├── kcl_desc_steam.txt
+│   ├── km_desc_nexus.txt
+│   ├── km_desc_steam.txt
+├── .gitignore
+├── go.mod
+├── LICENSE.md
+├── README.md
+```
