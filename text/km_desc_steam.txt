@@ -1,0 +1,36 @@
+A Kenshi mod that fully heals the currently selected player character(s) by pressing the [b]H[/b] key.
+
+Healing is done with [b]Character:healCompletely()[/b], the game's own full-heal routine (see [b]KenshiLua/docs/BindingsReference.md[/b] ## Character). It is more reliable than manually poking [b]MedicalSystem[/b] fields from Lua because it also handles internal state the Lua bindings can't reach, such as the wound list and damage-state recalculation.
+
+[b]What It Heals[/b]
+- [b]Blood[/b] - restored to maximum
+- [b]Flesh[/b] - every body part (head, chest, stomach, arms, legs) restored to its maximum health
+- [b]Stun damage[/b] - cleared
+- [b]Cut damage[/b] - cleared, no medical kits needed
+- [b]Splints[/b] - cleared
+- [b]Robot limb wear[/b] - cleared
+- [b]Wounds and derived health values[/b] - recalculated by the game
+- [b]Downed / bleeding-out state[/b] - reset so the character stands back up instead of continuing to bleed out
+
+A live character is fully healed. A truly dead character (dead flag) is not resurrected.
+
+[b]Usage[/b]
+Select one or more of your characters in-game, then press [b]H[/b].
+
+The script logs to the KenshiLua console/logger with the [b][KenshiMedic][/b] prefix, so you can confirm it ran (open the KenshiLua GUI with [b]Ctrl[/b] + [b]Shift[/b] + [b]L[/b]).
+
+[b]Notes[/b]
+- The hotkey is the [b]H[/b] key (OIS key code [b]35[/b]). To change it, edit [b]KC_H[/b] at the top of [b]scripts/init/medic.lua[/b].
+- OIS_KEY_CODES.md included for reference which lists available values.
+- The bundled [b]KenshiMedic.mod[/b] is an empty mod file (created by the FCS) - it exists only so the game's launcher recognizes the mod. All logic lives in Lua.
+
+[b]Requirements[/b]
+[url=https://www.nexusmods.com/kenshi/mods/847]RE_Kenshi[/url]
+[url=https://www.nexusmods.com/kenshi/mods/2068]KenshiLua[/url]
+
+[b]Shout outs[/b]
+[url=https://www.nexusmods.com/profile/GenPretz]GenPretz[/url] for making my life much easier!
+[url=https://lofigames.com/]Lo-Fi games[/url] for getting us all hooked.
+
+[b]Source Code[/b]
+[url=https://github.com/farghul/kenshi/]Kenshi Medic[/url]

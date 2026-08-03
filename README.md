@@ -10,10 +10,4 @@ I love Kenshi, but as much as I enjoy playing the game, I love adjusting my char
 
 This mod is very simple. It opens the Character Editor anytime during gameplay, with the exception of during active combat. There are no gameplay enhancements or modifications, you just get to play the `one more change` game with any of your active characters.
 
-It's currently set to listen for the `ALT+V` key.
-
 ![Reflection](misc/reflection.png)
-
-## Future Plans
-
-I hope to eventually let the `key binding` be a player decision.

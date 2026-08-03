@@ -1,0 +1,30 @@
+It's an apocalyptic world where you can't climb an inch on Maslow's Hierarchy of Needs. You're starving, penniless, and constantly being chased by bandits. In a world like that the solution is clear... more vanity.
+
+Have you ever been crawling your way from Bast to Stoat, because a pack of Skimmers didn't like the way you interrupted their patrol? And while dragging the ravaged tendrils of your once beautiful legs, hoping against hope that the bartender in Stoat will have a [b]First Aid Kit[/b] for sale, you think to yourself [b]I hate my cheekbones[/b]? Then Kenshi-Compact is for you.
+
+I love [b]Kenshi[/b], but as much as I enjoy playing the game, I love adjusting my character's look... constantly. So I created this mod in order to access the Character Editor anytime. Thought I'd share it in case anyone else is obsessed with sliders.
+
+[b]Main Features[/b]
+This mod is very simple. It opens the Character Editor anytime during gameplay, with the exception of during active combat. There are no gameplay enhancements or modifications, you just get to play the 'one more change' game with any of your active characters.
+
+[b]Usage[/b]
+Select a character in-game, then press [b]SHIFT + /[b]. The editor will not open while the character is in combat mode. The script logs with the [b][KenshiCompact][/b] prefix (KenshiLua GUI: [b]Ctrl[/b] + [b]Shift[/b] + [b]L[/b]).
+
+To change the hotkey, edit [b]KC_SLASH[/b] at the top of [b]scripts/init/open_character_editor.lua[/b] (OIS key codes: [b]V[/b] = 47, [b]F9[/b] = 120, [b]Insert[/b] = 210).
+
+[b]Notes[/b]
+
+- Only the primary selected character ([b]selectedCharacter[/b], matching the original plugin) is affected, not the whole selection.
+- OIS_KEY_CODES.md included for reference which lists available values.
+- The bundled [b].mod[/i] file is an empty mod file (created by the FCS) - it exists only so the game's launcher recognizes the mod. All logic lives in Lua.
+
+[b]Requirements[/b]
+[url=https://www.nexusmods.com/kenshi/mods/847]RE_Kenshi[/url]
+[url=https://www.nexusmods.com/kenshi/mods/2068]KenshiLua[/url]
+
+[b]Shout outs[/b]
+[url=https://www.nexusmods.com/profile/GenPretz]GenPretz[/url] for making my life much easier!
+[url=https://lofigames.com/]Lo-Fi games[/url] for getting us all hooked.
+
+[b]Source Code[/b]
+[url=https://github.com/farghul/kenshi/]Kenshi Compact[/url]
