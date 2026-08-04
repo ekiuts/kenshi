@@ -1,5 +1,3 @@
 {
-	"Plugins": [
-		"Kenshi-Compact.dll"
-	]
+  "Plugins": ["Kenshi-Compact.dll"]
 }

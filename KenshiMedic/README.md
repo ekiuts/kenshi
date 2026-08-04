@@ -19,9 +19,9 @@ A live character is fully healed. A truly dead character (dead flag) is not resu
 
 ## Installation
 
-1. Copy the whole `KenshiMedic` folder into Kenshi's `mods` directory (Steam: `<Steam>/steamapps/common/Kenshi/mods/`).
+1. For GoG, copy the whole `KenshiMedic` folder into Kenshi's `mods` directory (`GOG Games/Kenshi/mods/`). For Steam, simply subscribe.
 2. Make sure you have `RE_Kenshi` and `KenshiLua` installed and enabled (see the KenshiLua README).
-3. Launch the game and enable **KenshiMedic** in the game launcher's mod list (it must be ticked - KenshiLua only loads `scripts/init/*.lua` from *active* mods).
+3. Launch the game and enable **KenshiMedic** in the game launcher's mod list (it must be ticked - KenshiLua only loads `scripts/init/*.lua` from _active_ mods).
 
 ## Usage
 

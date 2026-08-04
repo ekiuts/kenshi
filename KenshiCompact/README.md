@@ -4,14 +4,14 @@ A Lua port of the KenshiCompact C++ plugin. Press **SHIFT + /** to open the Char
 
 ## Difference From The Original
 
-| | KenshiCompact (C++) | KenshiCompactLua (Lua) |
-|---|---|---|
-| Size | 99 lines (plus build files) | ~45 lines, one file |
-| Hotkey polling | Background `PollThread` + `GetAsyncKeyState` every 50ms | `registerHandler("onKeyDown", ...)` - the game notifies the script |
-| Game thread hop | `SetTimer` + `WM_TIMER` `TimerProc` | Not needed - callbacks already run on the game thread |
-| Foreground check | `GetForegroundWindow()` + PID compare | Not needed - input events only fire while the game has focus |
-| Mod content | DLL + `RE_Kenshi.json` + `.mod` referencing them | One `.lua` file in `scripts/init/` + an empty `.mod` |
-| Hotkey | `ALT + V` (polls modifier state) | `SHIFT + /` - `onKeyDown` only reports the raw `OIS::KeyCode`, `InputHandler` captures the modifier state |
+|                  | KenshiCompact (C++)                                     | KenshiCompactLua (Lua)                                                                                    |
+| ---------------- | ------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
+| Size             | 99 lines (plus build files)                             | ~45 lines, one file                                                                                       |
+| Hotkey polling   | Background `PollThread` + `GetAsyncKeyState` every 50ms | `registerHandler("onKeyDown", ...)` - the game notifies the script                                        |
+| Game thread hop  | `SetTimer` + `WM_TIMER` `TimerProc`                     | Not needed - callbacks already run on the game thread                                                     |
+| Foreground check | `GetForegroundWindow()` + PID compare                   | Not needed - input events only fire while the game has focus                                              |
+| Mod content      | DLL + `RE_Kenshi.json` + `.mod` referencing them        | One `.lua` file in `scripts/init/` + an empty `.mod`                                                      |
+| Hotkey           | `ALT + V` (polls modifier state)                        | `SHIFT + /` - `onKeyDown` only reports the raw `OIS::KeyCode`, `InputHandler` captures the modifier state |
 
 The logic itself is a one-to-one port:
 
@@ -34,7 +34,7 @@ All from `KenshiLua/docs/BindingsReference.md`:
 
 1. For GoG, copy the whole `KenshiCompact` folder into Kenshi's `mods` directory (`GOG Games/Kenshi/mods/`). For Steam, simply subscribe.
 2. Make sure you have `RE_Kenshi` and `KenshiLua` installed and enabled (see the KenshiLua README).
-3. Launch the game and enable **KenshiCompact** in the game launcher's mod list (it must be ticked - KenshiLua only loads `scripts/init/*.lua` from *active* mods).
+3. Launch the game and enable **KenshiCompact** in the game launcher's mod list (it must be ticked - KenshiLua only loads `scripts/init/*.lua` from _active_ mods).
 
 ## Usage
 

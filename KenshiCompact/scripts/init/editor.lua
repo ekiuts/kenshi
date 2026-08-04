@@ -4,7 +4,7 @@
 
 local logDebug = KenshiLua.logDebug
 
-local KC_SLASH = 53  -- OIS key code
+local KC_SLASH = 53 -- OIS key code
 
 local function open_character_editor()
     local player = getPlayerInterface()
@@ -40,5 +40,6 @@ local function on_key_down(key_code)
         open_character_editor()
     end
 end
+
 logDebug("[KenshiCompact] registering key callback (Shift + / = open character editor)")
 registerHandler("onKeyDown", on_key_down)
