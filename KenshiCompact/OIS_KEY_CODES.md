@@ -183,8 +183,7 @@ registerHandler("onKeyDown", on_key_down)
 
 ## Keys used by this mod
 
-This mod responds to the following key code in
-`scripts/init/open_character_editor.lua`:
+This mod responds to the following key code in `scripts/init/editor.lua`:
 
 | Key | Code (dec) | Location              |
 | --- | ---------- | --------------------- |
