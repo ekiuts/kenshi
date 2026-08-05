@@ -25,14 +25,21 @@ Inside of the Kenshi project are the following folders and files:
 │   ├── scripts/
 │       ├── init/
 │           ├── editor.lua
-│   │   ├── KenshiCompact.mod
-│   │   ├── OIS_KEY_CODES.md
-│   │   ├── README.md
+│   ├── KenshiCompact.mod
+│   ├── OIS_KEY_CODES.md
+│   ├── README.md
+├── KenshiLinter/
+│   ├── images/
+│       ├── banner.png
+│       ├── linter.png
+│   ├── scripts/
+│       ├── linter.lua
+│   ├── KenshiLinter.mod
+│   ├── README.md
 ├── KenshiMedic/
 │   ├── scripts/
 │        ├── init/
 │            ├── medic.lua
-│   ├── banner.png
 │   ├── KenshiMedic.mod
 │   ├── OIS_KEY_CODES.md
 │   ├── README.md
