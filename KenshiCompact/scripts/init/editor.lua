@@ -21,7 +21,7 @@ local function open_character_editor()
 
     local c = selected:getCharacter()
     if not c then
-        logDebug("[KenshiCompact] no Character Selected")
+        logDebug("[KenshiCompact] no character selected")
         return
     end
 

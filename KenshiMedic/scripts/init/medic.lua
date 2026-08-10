@@ -1,28 +1,29 @@
--- medic.lua - KenshiMedic
--- Press H to fully heal every currently selected character.
--- Uses Character:healCompletely(), the game's own full-heal routine
--- (see KenshiLua/docs/BindingsReference.md ## Character).
-
 local logDebug = KenshiLua.logDebug
 local KC_H = 35
 
 local function heal_selected()
-    logDebug("[KenshiMedic] healCompletely called")
-
     local world = getGameWorld()
     if not world then
         logDebug("[KenshiMedic] no world")
         return
     end
 
-    local selected = getPlayerInterface().selectedCharacters
+    local player = getPlayerInterface()
+    if not player then
+        logDebug("[KenshiMedic] no PlayerInterface")
+        return
+    end
+
+    local selected = player.selectedCharacters
     if not selected then
         logDebug("[KenshiMedic] No selected characters set found")
         return
     end
 
+    logDebug("[KenshiMedic] healCompletely called")
+
     local count = 0
-    for h, _ in pairs(selected:toTable()) do
+    for h in pairs(selected:toTable()) do
         local c = h:getCharacter()
         if c then
             c:healCompletely()
@@ -38,7 +39,6 @@ local function heal_selected()
 end
 
 local function on_key_down(key_code)
-    logDebug("[KenshiMedic] Key pressed: " .. tostring(key_code))
     if key_code == KC_H then
         logDebug("[KenshiMedic] H pressed, healing selected characters")
         heal_selected()

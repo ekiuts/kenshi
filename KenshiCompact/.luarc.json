@@ -1,0 +1,19 @@
+{
+  "runtime": {
+    "version": "LuaJIT"
+  },
+  "diagnostics": {
+    "globals": [
+      "getGameWorld",
+      "getPlayerInterface",
+      "getInputHandler",
+      "registerHandler",
+      "unregisterHandler",
+      "MyGUI",
+      "KenshiLua"
+    ]
+  },
+  "workspace": {
+    "library": []
+  }
+}

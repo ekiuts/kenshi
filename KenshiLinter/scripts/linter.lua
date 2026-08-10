@@ -105,17 +105,6 @@ local function editDistance(a, b, max)
     return prev[lb]
 end
 
-local function keysOf(t)
-    local out = {}
-    for k in pairs(t) do table.insert(out, k) end
-    return out
-end
-
-local function sortStrings(t)
-    table.sort(t)
-    return t
-end
-
 -- Best matches for `name` among candidates, sorted by (distance, alphabetical).
 local function suggestMatches(name, candidates, maxDist, maxN)
     maxDist = maxDist or LINT.cfg.suggestDist
@@ -183,13 +172,10 @@ LINT.api.stdTables = {
 
 local function collectMembersFromTable(t, out, skipMeta)
     if type(t) ~= "table" then return end
-    for k, v in pairs(t) do
+    for k in pairs(t) do
         if type(k) == "string" then
             if not (skipMeta and k:sub(1, 2) == "__") then
                 out[k] = true
-                if type(v) ~= "function" and type(v) ~= "table" then
-                    -- keep values; some classes expose enum-ish numbers directly
-                end
             end
         end
     end
@@ -256,14 +242,6 @@ end
 
 local function classMembers(name)
     return LINT.api.classes[name]
-end
-
--- Returns (exact, nearest) for a member check given a receiver class name.
-local function checkMember(className, member)
-    local members = classMembers(className)
-    if not members then return nil, nil end
-    if members[member] then return true, nil end
-    return false, suggestMatches(member, members)
 end
 
 ------------------------------------------------------------------------------
@@ -359,7 +337,7 @@ local function lex(src)
                 if closeAt then
                     -- account for newlines inside
                     local chunk = src:sub(start, closeAt - 1)
-                    for nl in chunk:gmatch("\n") do line = line + 1 end
+                    for _ in chunk:gmatch("\n") do line = line + 1 end
                     pos = closeAt + #close
                 else
                     pos = n + 1
@@ -382,7 +360,7 @@ local function lex(src)
                 local closeAt = src:find(close, start, true)
                 if closeAt then
                     local chunk = src:sub(start, closeAt - 1)
-                    for nl in chunk:gmatch("\n") do line = line + 1 end
+                    for _ in chunk:gmatch("\n") do line = line + 1 end
                     push("str", chunk)
                     pos = closeAt + #close
                 else
@@ -719,7 +697,6 @@ function Parser:parseFunctionStmt()
     self:next() -- 'function'
     -- function name(...) or function a.b.c(...) or function t:m(...)
     local n = self:next()
-    local dotted = false
     if n.t == "name" then
         if not self:isLocal(n.v) and self:peek().t ~= "sym" then
             -- global function definition; treat as implicit global
@@ -727,7 +704,6 @@ function Parser:parseFunctionStmt()
         end
     end
     while self:cur().t == "sym" and self:cur().v == "." do
-        dotted = true
         self:next()
         self:next() -- member name
     end
@@ -858,8 +834,7 @@ function Parser:parseBinop(level)
         local prec = isBinopTok(t) and BINOP_PREC[t.v] or nil
         if prec and prec >= level and not (t.v == "^" and prec == level) then
             self:next()
-            local rhs = self:parseBinop(level + 1)
-            lhs = lhs -- result not tracked further
+            self:parseBinop(level + 1)
         else
             break
         end
@@ -997,7 +972,9 @@ function Parser:parseTableConstructor()
             self:popScope()
         else
             self:parseExpr()
-            if not (self:cur().t == "sym" and self:cur().v == ",") and not (self:cur().t == "sym" and self:cur().v == ";") then
+            local cur = self:cur()
+            local noSep = not (cur.t == "sym" and (cur.v == "," or cur.v == ";"))
+            if noSep then
                 -- tolerate missing separators; advance one to avoid infinite loop
                 if self:cur().t == "sym" and self:cur().v == "}" then
                     self:next()
@@ -1228,12 +1205,10 @@ end
 
 local function flushReport()
     if #LINT._report > 0 then
-        local ok, err = pcall(function()
+        -- ignore write failures (e.g. no permissions)
+        pcall(function()
             writeFile(LINT.cfg.reportFile, table.concat(LINT._report, "\n") .. "\n")
         end)
-        if not ok then
-            -- ignore write failures (e.g. no permissions)
-        end
         LINT._report = {}
     end
 end
