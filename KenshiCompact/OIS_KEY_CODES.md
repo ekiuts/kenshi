@@ -2,7 +2,9 @@
 
 The KenshiLua `onKeyDown` callback passes the raw **OIS key code** cast to an
 integer, **not** an ASCII value and **not** a Windows virtual-key code. Using an
-ASCII or VK value (e.g. `78` for "N", `120` for F9) will silently never match.
+ASCII value (e.g. `78` for "N") or a Windows VK value (e.g. `0x78` / `120` for
+F9) will silently never match - KenshiLua delivers OIS codes (`49` for N,
+`67` for F9).
 
 The `key_code` argument received by your handler is compared directly against the
 values in the table below.

@@ -4,43 +4,54 @@ local KC_H = 35
 local function heal_selected()
     local player = getPlayerInterface()
     if not player then
-        logDebug("[KenshiMedic] no PlayerInterface")
+        logDebug("[KenshiMedic] getPlayerInterface() returned nil")
         return
     end
 
     local selected = player.selectedCharacters
     if not selected then
-        logDebug("[KenshiMedic] no selected characters set")
+        logDebug("[KenshiMedic] player.selectedCharacters is nil")
         return
     end
 
     logDebug("[KenshiMedic] healing selected characters")
 
-    local count = 0
+    local healed, skipped, failed = 0, 0, 0
     -- selectedCharacters:toTable() returns handles as keys (set-style),
     -- so the loop variable is the hand, not the value.
     for h in pairs(selected:toTable()) do
         local c = h:getCharacter()
-        if c then
-            c:healCompletely()
-            count = count + 1
+        if not c then
+            skipped = skipped + 1
+        else
+            local ok, err = pcall(c.healCompletely, c)
+            if ok then
+                healed = healed + 1
+            else
+                failed = failed + 1
+                logDebug("[KenshiMedic] healCompletely() failed for one character: " .. tostring(err))
+            end
         end
     end
 
-    if count == 0 then
-        logDebug("[KenshiMedic] nothing healed")
-    else
-        logDebug("[KenshiMedic] healed " .. tostring(count) .. " character(s)")
-    end
+    logDebug(string.format(
+        "[KenshiMedic] heal result: %d healed, %d skipped (no character), %d failed",
+        healed, skipped, failed))
 end
 
 local function on_key_down(key_code)
     if key_code == KC_H then
-        logDebug("[KenshiMedic] H pressed, healing selected characters")
+        logDebug("[KenshiMedic] H key pressed")
         heal_selected()
     end
 end
 
-logDebug("[KenshiMedic] Registering key callback")
+local PREV_HANDLER_KEY = "_KenshiMedic_prev_onKeyDown"
+local prev = _G[PREV_HANDLER_KEY]
+if prev ~= nil then
+    unregisterHandler("onKeyDown", prev)
+end
+
+logDebug("[KenshiMedic] registering H key handler")
 registerHandler("onKeyDown", on_key_down)
-logDebug("[KenshiMedic] Callback registered")
+_G[PREV_HANDLER_KEY] = on_key_down
