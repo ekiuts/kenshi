@@ -2,12 +2,6 @@ local logDebug = KenshiLua.logDebug
 local KC_H = 35
 
 local function heal_selected()
-    local world = getGameWorld()
-    if not world then
-        logDebug("[KenshiMedic] no world")
-        return
-    end
-
     local player = getPlayerInterface()
     if not player then
         logDebug("[KenshiMedic] no PlayerInterface")
@@ -16,13 +10,15 @@ local function heal_selected()
 
     local selected = player.selectedCharacters
     if not selected then
-        logDebug("[KenshiMedic] No selected characters set found")
+        logDebug("[KenshiMedic] no selected characters set")
         return
     end
 
-    logDebug("[KenshiMedic] healCompletely called")
+    logDebug("[KenshiMedic] healing selected characters")
 
     local count = 0
+    -- selectedCharacters:toTable() returns handles as keys (set-style),
+    -- so the loop variable is the hand, not the value.
     for h in pairs(selected:toTable()) do
         local c = h:getCharacter()
         if c then

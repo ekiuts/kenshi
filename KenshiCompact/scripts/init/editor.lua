@@ -15,13 +15,13 @@ local function open_character_editor()
 
     local selected = player.selectedCharacter
     if not selected then
-        logDebug("[KenshiCompact] no character selected")
+        logDebug("[KenshiCompact] no selected character handle")
         return
     end
 
     local c = selected:getCharacter()
     if not c then
-        logDebug("[KenshiCompact] no character selected")
+        logDebug("[KenshiCompact] selected handle has no character")
         return
     end
 

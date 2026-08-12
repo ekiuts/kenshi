@@ -17,6 +17,7 @@ Makefile
 # Visual Studio / MSVC
 # ─────────────────────────────
 *.sln
+*.out
 *.vcxproj
 *.vcxproj.filters
 *.user

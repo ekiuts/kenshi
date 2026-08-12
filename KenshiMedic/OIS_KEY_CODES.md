@@ -185,7 +185,7 @@ registerHandler("onKeyDown", on_key_down)
 
 ## Keys used by this mod
 
-This mod responds to the following key code in `scripts/init/heal.lua`:
+This mod responds to the following key code in `scripts/init/medic.lua`:
 
 | Key | Code (dec) | Location          |
 | --- | ---------- | ----------------- |
