@@ -38,7 +38,6 @@ LINT.cfg = {
     maxSuggest  = 3,     -- suggestions shown per finding
     suggestDist = 3,     -- max edit distance for "did you mean" hints
     fixDist     = 2,     -- auto-fix only for very close matches
-    -- Receive an identifier's line number from LuaJIT's load? not needed.
 }
 
 ------------------------------------------------------------------------------
@@ -72,8 +71,15 @@ end
 
 local function splitLines(s)
     local out = {}
+    -- Append a newline so a final partial line is included; if `s` already
+    -- ended with one, the appended sentinel produces a trailing empty entry
+    -- we drop, keeping `#out` aligned with the lexer's line count.
+    local hadTrailingNewline = s:sub(-1) == "\n"
     for line in (s .. "\n"):gmatch("([^\n]*)\n") do
         table.insert(out, line)
+    end
+    if hadTrailingNewline and #out > 0 and out[#out] == "" then
+        out[#out] = nil
     end
     return out
 end
@@ -151,6 +157,7 @@ LINT.api.knownInstances = {
     gui = "ForgottenGUI",
     ForgottenGUI = "ForgottenGUI",
     root = "RootObjectFactory",
+    RootObjectFactory = "RootObjectFactory",
 }
 
 -- Tables whose members are ordinary Lua API and should not be member-checked.
@@ -494,12 +501,18 @@ function Parser:isLocal(name)
 end
 
 function Parser:recordUse(name, line, kind, call)
+    local isLocal
+    if kind == "var" then
+        isLocal = self:isLocal(name)
+    else
+        isLocal = false
+    end
     table.insert(self.uses, {
         name = name,
         line = line,
         kind = kind or "var",
         call = call or false,
-        ["local"] = (kind == "var") and self:isLocal(name) or false,
+        ["local"] = isLocal,
     })
     local u = self.uses[#self.uses]
     return u
@@ -572,9 +585,7 @@ function Parser:parseStatement()
         elseif v == "while" then
             self:next()
             self:parseExpr()
-            if not self:expectSym("do") and self:cur().t == "kw" and self:cur().v == "do" then
-                self:next()
-            end
+            self:expectSym("do")
             self:pushScope()
             self:parseBlock()
             self:expectKw("end")
@@ -1048,7 +1059,16 @@ end
 function LINT.analyzeSource(src, fileLabel)
     local findings = {}
 
+    -- Strip a leading UTF-8 BOM (0xEF 0xBB 0xBF) so the lexer sees a clean
+    -- source start and `loadfn` does not see an odd first character.
+    if src:sub(1, 3) == "\239\187\191" then
+        src = src:sub(4)
+    end
+
     -- 1. Syntax check (compile only, never execute).
+    -- `loadstring` is Lua 5.1 / LuaJIT only; `load` works on all targets
+    -- (Lua 5.2+ removed `loadstring`). The `or` keeps the script runnable
+    -- on either runtime.
     local loadfn = loadstring or load
     local chunk, err = loadfn("return " .. src)
     if not chunk then
@@ -1164,6 +1184,13 @@ end
 ------------------------------------------------------------------------------
 
 function LINT.listLuaFiles(rootDir)
+    -- SECURITY: `rootDir` is interpolated into a shell command. It is expected
+    -- to come from `LINT.cfg.modsRoot` (mod-controlled, sandbox-only) and not
+    -- from free-form user input. Treat anything coming from the document at
+    -- `rootDir` as untrusted code: do not pass it to a shell without first
+    -- restricting it to a known-safe prefix. The current usage is fine for
+    -- the in-game Console flow but should be reviewed if `rootDir` ever
+    -- accepts untrusted input.
     local files = {}
     local cmd
     if isWindows() then
@@ -1247,12 +1274,23 @@ local function fmtFindings(fileLabel, findings)
 end
 
 local function echo(message)
-    -- Best-effort: log to KenshiLua logger if available.
+    -- Best-effort: log line-by-line to KenshiLua logger if available.
+    -- Some in-game consoles truncate a single big argument, so we route
+    -- each line through `logWarn` separately to keep entries readable.
     local kl = rawget(_G, "KenshiLua")
-    if kl and type(kl) == "table" then
-        local logWarn = kl.logWarn or kl.log
-        if type(logWarn) == "function" then
-            pcall(logWarn, message)
+    if not (kl and type(kl) == "table") then return end
+    local logWarn = kl.logWarn or kl.log
+    if type(logWarn) ~= "function" then return end
+    local msg = tostring(message)
+    local pos = 1
+    while true do
+        local nl = msg:find("\n", pos, true)
+        if nl then
+            pcall(logWarn, msg:sub(pos, nl - 1))
+            pos = nl + 1
+        else
+            pcall(logWarn, msg:sub(pos))
+            return
         end
     end
 end
@@ -1406,6 +1444,10 @@ function LINT.fixMod(modName, applyInPlace)
     return table.concat(out, "\n")
 end
 
+function LINT.fixFile(path, applyInPlace)
+    return LINT.applyFixes(path, applyInPlace)
+end
+
 ------------------------------------------------------------------------------
 -- Module export (plain global, compatible with the Console and Script Editor)
 ------------------------------------------------------------------------------
@@ -1417,5 +1459,6 @@ if not _G["lintMod"] then _G["lintMod"] = function(...) return LINT.lintMod(...)
 if not _G["lintFile"] then _G["lintFile"] = function(...) return LINT.lintFile(...) end end
 if not _G["lintAll"] then _G["lintAll"] = function(...) return LINT.lintAll(...) end end
 if not _G["fixMod"] then _G["fixMod"] = function(...) return LINT.fixMod(...) end end
+if not _G["fixFile"] then _G["fixFile"] = function(...) return LINT.fixFile(...) end end
 
 return LINT

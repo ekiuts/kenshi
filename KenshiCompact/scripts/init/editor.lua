@@ -34,14 +34,19 @@ local function open_character_editor()
     player:activateCharacterEditMode(c)
 end
 
-local function on_key_down(key_code)
-    local ih = getInputHandler()
+local function on_key_down(first, second)
+    local key_code, ih
+    if type(first) == "number" then
+        key_code = first -- legacy KenshiLua: first arg is the key code
+        ih = getInputHandler()
+    else
+        ih = first -- new KenshiLua: first arg is the InputHandler
+        key_code = second -- second arg is the key code
+    end
     if key_code == KC_SLASH and ih and ih.shift then -- Shift + /
         open_character_editor()
     end
 end
-
-logDebug("[KenshiCompact] registering Shift+/ key handler")
 
 local PREV_HANDLER_KEY = "_KenshiCompact_prev_onKeyDown"
 local prev = _G[PREV_HANDLER_KEY]
@@ -49,5 +54,6 @@ if prev ~= nil then
     unregisterHandler("onKeyDown", prev)
 end
 
+logDebug("[KenshiCompact] registering Shift+/ key handler")
 registerHandler("onKeyDown", on_key_down)
 _G[PREV_HANDLER_KEY] = on_key_down

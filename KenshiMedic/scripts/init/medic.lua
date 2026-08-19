@@ -1,3 +1,6 @@
+-- medic.lua KenshiMedic
+-- Press H to heal selected character(s)
+
 local logDebug = KenshiLua.logDebug
 local KC_H = 35
 
@@ -39,7 +42,13 @@ local function heal_selected()
         healed, skipped, failed))
 end
 
-local function on_key_down(key_code)
+local function on_key_down(first, second)
+    local key_code
+    if type(first) == "number" then
+        key_code = first -- legacy KenshiLua: first arg is the key code
+    else
+        key_code = second -- new KenshiLua: first arg is the InputHandler, second is the key code
+    end
     if key_code == KC_H then
         logDebug("[KenshiMedic] H key pressed")
         heal_selected()

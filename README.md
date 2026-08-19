@@ -34,7 +34,6 @@ Inside of the Kenshi project are the following folders and files:
 │       ├── linter.png
 │   ├── scripts/
 │       ├── linter.lua
-│   ├── KenshiLinter.mod
 │   ├── README.md
 ├── KenshiMedic/
 │   ├── scripts/
@@ -51,7 +50,6 @@ Inside of the Kenshi project are the following folders and files:
 │   ├── km_desc_nexus.txt
 │   ├── km_desc_steam.txt
 ├── .gitignore
-├── go.mod
 ├── LICENSE.md
 ├── README.md
 ```
