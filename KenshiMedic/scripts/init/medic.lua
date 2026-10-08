@@ -42,25 +42,12 @@ local function heal_selected()
         healed, skipped, failed))
 end
 
-local function on_key_down(first, second)
-    local key_code
-    if type(first) == "number" then
-        key_code = first -- legacy KenshiLua: first arg is the key code
-    else
-        key_code = second -- new KenshiLua: first arg is the InputHandler, second is the key code
-    end
+local function on_key_down(input_handler, key_code)
     if key_code == KC_H then
         logDebug("[KenshiMedic] H key pressed")
         heal_selected()
     end
 end
 
-local PREV_HANDLER_KEY = "_KenshiMedic_prev_onKeyDown"
-local prev = _G[PREV_HANDLER_KEY]
-if prev ~= nil then
-    unregisterHandler("onKeyDown", prev)
-end
-
 logDebug("[KenshiMedic] registering H key handler")
-registerHandler("onKeyDown", on_key_down)
-_G[PREV_HANDLER_KEY] = on_key_down
+Events.on("InputHandler::keyDownEvent", on_key_down)

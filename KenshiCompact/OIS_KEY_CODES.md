@@ -1,21 +1,21 @@
 # OIS Key Code Reference
 
-The KenshiLua `onKeyDown` callback passes the raw **OIS key code** cast to an
-integer, **not** an ASCII value and **not** a Windows virtual-key code. Using an
-ASCII value (e.g. `78` for "N") or a Windows VK value (e.g. `0x78` / `120` for
-F9) will silently never match - KenshiLua delivers OIS codes (`49` for N,
-`67` for F9).
+The KenshiLua `InputHandler::keyDownEvent` callback passes the raw **OIS key code**
+cast to an integer, **not** an ASCII value and **not** a Windows virtual-key code.
+Using an ASCII value (e.g. `78` for "N") or a Windows VK value (e.g. `0x78` /
+`120` for F9) will silently never match - KenshiLua delivers OIS codes (`49` for
+N, `67` for F9).
 
-The `key_code` argument received by your handler is compared directly against the
-values in the table below.
+The handler receives two arguments: the `InputHandler` instance and the `key_code`.
+The `key_code` argument is compared directly against the values in the table below.
 
 ```lua
-local function on_key_down(key_code)
+local function on_key_down(input_handler, key_code)
     if key_code == 53 then  -- /
         -- do something
     end
 end
-registerHandler("onKeyDown", on_key_down)
+Events.on("InputHandler::keyDownEvent", on_key_down)
 ```
 
 ## Key codes
@@ -171,16 +171,17 @@ registerHandler("onKeyDown", on_key_down)
 
 ## Modifiers
 
-The `onKeyDown` callback only delivers the bare key code, so modifier state must be queried separately. Use the `getInputHandler()` global inside your handler and check the `.ctrl`, `.shift`, and `.alt` booleans:
+The `InputHandler::keyDownEvent` callback delivers the `InputHandler` as its first
+argument, so modifier state is read directly from it via the `.ctrl`, `.shift`, and
+`.alt` booleans:
 
 ```lua
-local function on_key_down(key_code)
-    local ih = getInputHandler()
-    if key_code == KC_SLASH and ih and ih.shift then  -- Shift + /
+local function on_key_down(input_handler, key_code)
+    if key_code == KC_SLASH and input_handler and input_handler.shift then  -- Shift + /
         -- do something
     end
 end
-registerHandler("onKeyDown", on_key_down)
+Events.on("InputHandler::keyDownEvent", on_key_down)
 ```
 
 ## Keys used by this mod

@@ -7,11 +7,11 @@ A Lua port of the KenshiCompact C++ plugin. Press **SHIFT + /** to open the Char
 |                  | KenshiCompact (C++)                                     | KenshiCompactLua (Lua)                                                                                    |
 | ---------------- | ------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
 | Size             | 99 lines (plus build files)                             | ~45 lines, one file                                                                                       |
-| Hotkey polling   | Background `PollThread` + `GetAsyncKeyState` every 50ms | `registerHandler("onKeyDown", ...)` - the game notifies the script                                        |
+| Hotkey polling   | Background `PollThread` + `GetAsyncKeyState` every 50ms | `Events.on("InputHandler::keyDownEvent", ...)` - the game notifies the script                             |
 | Game thread hop  | `SetTimer` + `WM_TIMER` `TimerProc`                     | Not needed - callbacks already run on the game thread                                                     |
 | Foreground check | `GetForegroundWindow()` + PID compare                   | Not needed - input events only fire while the game has focus                                              |
 | Mod content      | DLL + `RE_Kenshi.json` + `.mod` referencing them        | One `.lua` file in `scripts/init/` + an empty `.mod`                                                      |
-| Hotkey           | `ALT + V` (polls modifier state)                        | `SHIFT + /` - `onKeyDown` only reports the raw `OIS::KeyCode`, `InputHandler` captures the modifier state |
+| Hotkey           | `ALT + V` (polls modifier state)                        | `SHIFT + /` - the callback receives the `InputHandler` and the raw `OIS::KeyCode`                         |
 
 The logic itself is a one-to-one port:
 
@@ -28,7 +28,7 @@ All from `KenshiLua/docs/BindingsReference.md`:
 - `hand:getCharacter()` - (## hand)
 - `character:isInCombatMode(melee, ranged)` - (## Character)
 - `player:activateCharacterEditMode(character)` - (## PlayerInterface)
-- `registerHandler("onKeyDown", function(keyCode))` - (## CallbacksReference.md)
+- `Events.on("InputHandler::keyDownEvent", function(inputHandler, keyCode))` - (## CallbacksReference.md)
 
 ## Installation
 

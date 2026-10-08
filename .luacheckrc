@@ -4,9 +4,7 @@ globals = {
     "KenshiLua",
     "getGameWorld",
     "getPlayerInterface",
-    "getInputHandler",
-    "registerHandler",
-    "unregisterHandler",
+    "Events",
     "MyGUI",
 }
 

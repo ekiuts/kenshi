@@ -4,12 +4,9 @@
   },
   "diagnostics": {
     "globals": [
-      "getGameWorld",
       "getPlayerInterface",
-      "registerHandler",
-      "unregisterHandler",
-      "MyGUI",
-      "KenshiLua"
+      "KenshiLua",
+      "Events"
     ]
   },
   "workspace": {
