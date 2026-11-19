@@ -2,7 +2,10 @@
 -- Press H to heal selected character(s)
 
 local logDebug = KenshiLua.logDebug
-local KC_H = 35
+
+-- OIS key code for H. KenshiLua v0.3.10 and newer expose the OIS enums as the
+-- global `OIS` table; older releases only deliver the raw integer.
+local KC_H = (OIS and OIS.KeyCode and OIS.KeyCode.KC_H) or 35
 
 local function heal_selected()
     local player = getPlayerInterface()

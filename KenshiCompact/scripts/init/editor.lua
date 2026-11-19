@@ -4,7 +4,9 @@
 
 local logDebug = KenshiLua.logDebug
 
-local KC_SLASH = 53 -- OIS key code
+-- OIS key code for /. KenshiLua v0.3.10 and newer expose the OIS enums as the
+-- global `OIS` table; older releases only deliver the raw integer.
+local KC_SLASH = (OIS and OIS.KeyCode and OIS.KeyCode.KC_SLASH) or 53
 
 local function open_character_editor()
     local player = getPlayerInterface()

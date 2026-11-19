@@ -6,6 +6,7 @@ globals = {
     "getPlayerInterface",
     "Events",
     "MyGUI",
+    "OIS",
 }
 
 ignore = {
