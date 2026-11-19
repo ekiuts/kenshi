@@ -1,15 +1,14 @@
 {
-  "runtime": {
-    "version": "LuaJIT"
-  },
-  "diagnostics": {
-    "globals": [
-      "getPlayerInterface",
-      "KenshiLua",
-      "Events"
-    ]
-  },
-  "workspace": {
-    "library": []
-  }
+  "$schema": "https://raw.githubusercontent.com/LuaLS/vscode-lua/master/setting/schema.json",
+  "runtime.version": "LuaJIT",
+  "diagnostics.globals": [
+    "getPlayerInterface",
+    "KenshiLua",
+    "Events",
+    "OIS"
+  ],
+  "workspace.library": [
+    "../../KenshiLua/luals/addon/kenshilua/library",
+    "../KenshiLua/luals/addon/kenshilua/library"
+  ]
 }
