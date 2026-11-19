@@ -26,7 +26,6 @@ Inside of the Kenshi project are the following folders and files:
 │       ├── init/
 │           ├── editor.lua
 │   ├── KenshiCompact.mod
-│   ├── OIS_KEY_CODES.md
 │   ├── README.md
 ├── KenshiLinter/
 │   ├── images/
@@ -40,7 +39,6 @@ Inside of the Kenshi project are the following folders and files:
 │        ├── init/
 │            ├── medic.lua
 │   ├── KenshiMedic.mod
-│   ├── OIS_KEY_CODES.md
 │   ├── README.md
 ├── text/
 │   ├── kc_desc_nexus.txt

@@ -42,8 +42,16 @@ Select a character in-game, then press **SHIFT + /**. The editor will not open w
 
 To change the hotkey, edit `KC_SLASH` at the top of `scripts/init/editor.lua`.
 
+## Development
+
+The script uses the KenshiLua API. For editor completion and hover documentation, use the [Lua Language Server](https://luals.github.io/) with the KenshiLua LuaLS addon:
+
+1. Download `KenshiLua-LuaLS-Addon-v<version>-alpha.zip` from the [KenshiLua releases](https://github.com/Genpretz/KenshiLua/releases). Use the addon from the same release as the KenshiLua DLL you target.
+2. Extract it outside your mods folder, for example `~/KenshiModding/LuaLS`.
+3. The bundled `.luarc.json` already points at the addon in a sibling `KenshiLua` checkout (`../../KenshiLua/luals/addon/kenshilua/library`). If you extracted the addon somewhere else, add that path to `workspace.library`.
+
 ## Notes
 
 - Only the primary selected character (`selectedCharacter`, matching the original plugin) is affected, not the whole selection.
-- OIS_KEY_CODES.md included for reference which lists available values.
+- The hotkey is the `/` key (`OIS.KeyCode.KC_SLASH`, numeric value `53`). The full list of key codes is in `KenshiLua/docs/EnumsReference.md` (table `OIS.KeyCode`), or at runtime via the global `OIS.KeyCode` table.
 - The bundled `.mod` file is an empty mod file (created by the FCS) - it exists only so the game's launcher recognizes the mod. All logic lives in Lua.

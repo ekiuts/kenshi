@@ -29,8 +29,16 @@ Select one or more of your characters in-game, then press **H**.
 
 The script logs to the KenshiLua console/logger with the `[KenshiMedic]` prefix, so you can confirm it ran (open the KenshiLua GUI with `Ctrl` + `Shift` + `L`).
 
+## Development
+
+The script uses the KenshiLua API. For editor completion and hover documentation, use the [Lua Language Server](https://luals.github.io/) with the KenshiLua LuaLS addon:
+
+1. Download `KenshiLua-LuaLS-Addon-v<version>-alpha.zip` from the [KenshiLua releases](https://github.com/Genpretz/KenshiLua/releases). Use the addon from the same release as the KenshiLua DLL you target.
+2. Extract it outside your mods folder, for example `~/KenshiModding/LuaLS`.
+3. The bundled `.luarc.json` already points at the addon in a sibling `KenshiLua` checkout (`../../KenshiLua/luals/addon/kenshilua/library`). If you extracted the addon somewhere else, add that path to `workspace.library`.
+
 ## Notes
 
-- The hotkey is the `H` key (OIS key code `35`). To change it, edit `KC_H` at the top of `scripts/init/medic.lua`.
-- OIS_KEY_CODES.md included for reference which lists available values.
+- The hotkey is the `H` key (`OIS.KeyCode.KC_H`, numeric value `35`). To change it, edit `KC_H` at the top of `scripts/init/medic.lua`.
+- The full list of key codes is in `KenshiLua/docs/EnumsReference.md` (table `OIS.KeyCode`), or at runtime via the global `OIS.KeyCode` table.
 - The bundled `KenshiMedic.mod` is an empty mod file (created by the FCS) - it exists only so the game's launcher recognizes the mod. All logic lives in Lua.
